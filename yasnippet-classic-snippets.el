@@ -2,8 +2,9 @@
 
 ;; Copyright (C) 2018 Free Software Foundation, Inc.
 
+;; Maintainer: Noam Postavsky <npostavs@gmail.com>
 ;; Keywords: snippets
-;; Version: 1.0.0
+;; Version: 1.0.1
 ;; Package-Requires: ((yasnippet "0.9.1"))
 ;; Keywords: convenience, snippets
 
@@ -28,18 +29,23 @@
 
 ;;; Code:
 
-(require 'yasnippet)
-
 (defconst yasnippet-classic-snippets-dir
   (expand-file-name
    "snippets"
    (file-name-directory (or load-file-name buffer-file-name))))
 
-;;;###autoload
 (eval-after-load 'yasnippet
-  '(unless (memq 'yasnippet-classic-snippets-dir yas-snippet-dirs)
-    (add-to-list 'yas-snippet-dirs 'yasnippet-classic-snippets-dir t)
-    (yas-load-directory yasnippet-classic-snippets-dir)))
+  '(progn
+     (when (stringp yas-snippet-dirs)
+       ;; In case the user set the old format.
+       (setq yas-snippet-dirs (list yas-snippet-dirs)))
+     (unless (memq 'yasnippet-classic-snippets-dir yas-snippet-dirs)
+       ;; Prepare for future snippet reloads.
+       (add-to-list 'yas-snippet-dirs 'yasnippet-classic-snippets-dir t)
+       ;; And get our snippets ready now.
+       (yas-load-directory yasnippet-classic-snippets-dir t))))
+
+;;;###autoload (eval-after-load 'yasnippet '(require 'yasnippet-classic-snippets))
 
 (provide 'yasnippet-classic-snippets)
 
