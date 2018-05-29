@@ -4,8 +4,9 @@
 
 ;; Maintainer: Noam Postavsky <npostavs@gmail.com>
 ;; Keywords: snippets
-;; Version: 1.0.1
+;; Version: 1.0.2
 ;; Package-Requires: ((yasnippet "0.9.1"))
+;; Package-Type: multi
 ;; Keywords: convenience, snippets
 
 ;;; Commentary:
